@@ -1,13 +1,7 @@
 #include "Vei2.h"
+#include "graphics.h"
 
 class MineField {
-public:
-  MineField();
-  MineField(MineField &&) = default;
-  MineField(const MineField &) = default;
-  MineField &operator=(MineField &&) = default;
-  MineField &operator=(const MineField &) = default;
-  ~MineField();
 
 private:
   class Tile {
@@ -17,6 +11,7 @@ private:
   public:
     void SpawnMine();
     bool hasMine() const;
+    void Draw (const Vei2& screenPos,Graphics& gfx) const;
 
   private:
     State state = State::Hidden;

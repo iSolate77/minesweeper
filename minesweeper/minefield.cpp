@@ -1,4 +1,5 @@
 #include "MineField.h"
+#include "SpriteCodex.h"
 #include "Vei2.h"
 #include "graphics.h"
 #include <assert.h>
@@ -30,4 +31,31 @@ MineField::MineField(int nMines) {
 
 MineField::Tile &MineField::TileAt(const Vei2 &gridPos) {
   return field[gridPos.y * width + gridPos.x];
+}
+
+void MineField::Draw(Graphics &gfx) const {
+  for (Vei2 gridPos = {0, 0}; gridPos.y < height; gridPos.y++) {
+    for (; gridPos.x < width; gridPos.x++) {
+      TileAt(gridPos);
+    }
+  }
+}
+
+void MineField::Tile::Draw(const Vei2 &screenPos, Graphics &gfx) const {
+  switch (state) {
+  case State::Hidden:
+    SpriteCodex::DrawTileButton(screenPos, gfx);
+    break;
+  case State::Flagged:
+    SpriteCodex::DrawTileButton(screenPos, gfx);
+    SpriteCodex::DrawTileFlag(screenPos, gfx);
+    break;
+  case State::Revealed:
+    if (!hasBomb) {
+      SpriteCodex::DrawTile0(screenPos, gfx)
+    } else {
+      SpriteCodex::DrawTileBomb(screenPos, gfx)
+    }
+    break;
+  }
 }

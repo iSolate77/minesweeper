@@ -20,8 +20,8 @@
 ******************************************************************************************/
 #pragma once
 #include "ChiliWin.h"
-#include <d3d11.h>
-#include <wrl.h>
+// #include <d3d11.h>
+// #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
 #include "RectI.h"
