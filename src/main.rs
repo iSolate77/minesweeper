@@ -1,12 +1,5 @@
-use std::time::Instant;
-use text_io::read;
-
+// Merge sort
 fn main() {
-    print!("Please enter a number for n: ");
-    let n: i32 = read!();
-    let now = Instant::now();
-    let square = n * n;
-    let later = Instant::now();
-    println!("n squared = {}", square);
-    print!("Time elapsed: {:?}", later.duration_since(now))
+    let mut b:[i32; 9] = [9,1,3,4,2,7,8,6,5];
+    println!("Unsorted array: {:?}", b);
 }
