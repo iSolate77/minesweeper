@@ -33,10 +33,14 @@ MineField::Tile &MineField::TileAt(const Vei2 &gridPos) {
   return field[gridPos.y * width + gridPos.x];
 }
 
+const MineField::Tile &MineField::TileAt(const Vei2 &gridPos) const {
+  return field[gridPos.y * width + gridPos.x];
+}
+
 void MineField::Draw(Graphics &gfx) const {
   for (Vei2 gridPos = {0, 0}; gridPos.y < height; gridPos.y++) {
     for (; gridPos.x < width; gridPos.x++) {
-      TileAt(gridPos);
+      TileAt(gridPos).Draw(gridPos * SpriteCodex::tileSize, gfx);
     }
   }
 }
@@ -52,9 +56,9 @@ void MineField::Tile::Draw(const Vei2 &screenPos, Graphics &gfx) const {
     break;
   case State::Revealed:
     if (!hasBomb) {
-      SpriteCodex::DrawTile0(screenPos, gfx)
+      SpriteCodex::DrawTile0(screenPos, gfx);
     } else {
-      SpriteCodex::DrawTileBomb(screenPos, gfx)
+      SpriteCodex::DrawTileBomb(screenPos, gfx);
     }
     break;
   }

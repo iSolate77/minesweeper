@@ -1,5 +1,5 @@
+#include "Graphics.h"
 #include "Vei2.h"
-#include "graphics.h"
 
 class MineField {
 
@@ -20,6 +20,7 @@ private:
 
 private:
   Tile &TileAt(const Vei2 &gridPos);
+  const Tile &TileAt(const Vei2 &gridPos) const;
 
 private:
   static constexpr int width = 9;
