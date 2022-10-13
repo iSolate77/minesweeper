@@ -40,8 +40,18 @@ impl Minesweeper {
             flagged_fields: HashSet::new(),
         }
     }
-    pub fn neighbours(&self, (x, y): Position) -> Vec<Position> {
-        (x-1 ..= x+1).flat_map(|i| (y-1 ..= y+1).map(move |j| (i, j))).collect()
+    pub fn iter_neighbours(&self, (x, y): Position) -> impl Iterator<Item = Position> {
+        // add code here
+        let width = self.width;
+        let height = self.height;
+
+        (x.max(1) - 1..=(x + 1).min(width - 1))
+            .flat_map(move |i| (y.max(1) - 1..=(y + 1).min(height - 1)).map(move |j| (i, j)))
+            .filter(move |&pos| pos != (x, y))
+    }
+
+    pub fn neighbouring_mines(&self, pos: Position) -> u8 {
+        self.iter_neighbours(pos).filter(|pos| self.mines.contains(pos)).count() as u8
     }
 
     pub fn open(&mut self, position: Position) -> OpenResult {
