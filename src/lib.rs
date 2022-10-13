@@ -2,10 +2,15 @@ use std::collections::HashSet;
 
 mod random;
 
-type Position = (usize, usize);
+pub type Position = (usize, usize);
+
+pub enum OpenResult {
+    Mine,
+    NoMine(u8),
+}
 
 #[derive(Debug)]
-struct Minesweeper {
+pub struct Minesweeper {
     width: usize,
     height: usize,
     open_field: HashSet<Position>,
@@ -33,6 +38,21 @@ impl Minesweeper {
                 mines
             },
             flagged_fields: HashSet::new(),
+        }
+    }
+    pub fn neighbours(&self, (x, y): Position) -> Vec<Position> {
+        (x-1 ..= x+1).flat_map(|i| (y-1 ..= y+1).map(move |j| (i, j))).collect()
+    }
+
+    pub fn open(&mut self, position: Position) -> OpenResult {
+        self.open_field.insert(position);
+
+        let is_mine = self.mines.contains(&position);
+
+        if is_mine {
+            OpenResult::Mine
+        } else {
+            OpenResult::NoMine(0)
         }
     }
 }
